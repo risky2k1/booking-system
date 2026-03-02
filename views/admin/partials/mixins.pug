@@ -1,0 +1,12 @@
+mixin badge(status)
+  - var cls = status === 'confirmed' ? 'bg-emerald-100 text-emerald-800' : status === 'pending' ? 'bg-amber-100 text-amber-800' : status === 'cancelled' ? 'bg-slate-100 text-slate-600' : 'bg-slate-100 text-slate-600'
+  span.inline-flex.items-center.px-2.5.py-0.5.rounded-full.text-xs.font-medium(class=cls)= status
+
+mixin button(text, type)
+  - var cls = type === 'primary' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : type === 'danger' ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-slate-200 hover:bg-slate-300 text-slate-800'
+  button.px-4.py-2.rounded-lg.font-medium.text-sm.transition-colors(class=cls, type="button")= text
+
+mixin tableRow(data)
+  tr.hover:bg-slate-50
+    each val in data
+      td.px-6.py-4.text-sm.text-slate-700= val

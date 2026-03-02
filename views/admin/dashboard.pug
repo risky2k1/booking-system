@@ -1,0 +1,47 @@
+extends layouts/layout
+
+block content
+  .mb-8
+    h1.text-2xl.font-semibold.text-slate-900 Dashboard
+    p.text-slate-600.mt-1 Overview of your booking operations
+  .grid.grid-cols-1.sm:grid-cols-2.lg:grid-cols-4.gap-6.mb-8
+    .bg-white.rounded-xl.border.border-slate-200.p-6.shadow-sm
+      .flex.items-center.justify-between
+        div
+          p.text-sm.font-medium.text-slate-500 Total Bookings
+          p.text-2xl.font-semibold.text-slate-900.mt-1= stats.totalBookings
+        .w-12.h-12.rounded-lg.bg-indigo-100.flex.items-center.justify-center
+          svg.w-6.h-6.text-indigo-600(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+            path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z")
+    .bg-white.rounded-xl.border.border-slate-200.p-6.shadow-sm
+      .flex.items-center.justify-between
+        div
+          p.text-sm.font-medium.text-slate-500 Confirmed
+          p.text-2xl.font-semibold.text-slate-900.mt-1= stats.confirmedBookings
+        .w-12.h-12.rounded-lg.bg-emerald-100.flex.items-center.justify-center
+          svg.w-6.h-6.text-emerald-600(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+            path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
+    .bg-white.rounded-xl.border.border-slate-200.p-6.shadow-sm
+      .flex.items-center.justify-between
+        div
+          p.text-sm.font-medium.text-slate-500 Total Rooms
+          p.text-2xl.font-semibold.text-slate-900.mt-1= stats.totalRooms
+        .w-12.h-12.rounded-lg.bg-amber-100.flex.items-center.justify-center
+          svg.w-6.h-6.text-amber-600(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+            path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4")
+    .bg-white.rounded-xl.border.border-slate-200.p-6.shadow-sm
+      .flex.items-center.justify-between
+        div
+          p.text-sm.font-medium.text-slate-500 Revenue
+          p.text-2xl.font-semibold.text-slate-900.mt-1 $#{stats.revenue}
+        .w-12.h-12.rounded-lg.bg-slate-100.flex.items-center.justify-center
+          svg.w-6.h-6.text-slate-600(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+            path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+  .bg-white.rounded-xl.border.border-slate-200.shadow-sm.overflow-hidden
+    .px-6.py-4.border-b.border-slate-200
+      h2.text-lg.font-medium.text-slate-900 Quick actions
+    .p-6
+      .flex.flex-wrap.gap-4
+        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium.hover:bg-indigo-700(href="/admin/bookings") View Bookings
+        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.text-sm.font-medium.hover:bg-slate-300(href="/admin/rooms") Manage Rooms
+        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.text-sm.font-medium.hover:bg-slate-300(href="/admin/pricing") Pricing

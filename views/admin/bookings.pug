@@ -1,0 +1,32 @@
+extends layouts/layout
+
+block content
+  .mb-8
+    h1.text-2xl.font-semibold.text-slate-900 Bookings
+    p.text-slate-600.mt-1 Manage all reservations
+  .bg-white.rounded-xl.border.border-slate-200.shadow-sm.overflow-hidden
+    .overflow-x-auto
+      table.min-w-full.divide-y.divide-slate-200
+        thead.bg-slate-50
+          tr
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider ID
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Guest
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Room
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Check-in
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Check-out
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Status
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Total
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider
+        tbody.divide-y.divide-slate-200
+          each booking in bookings
+            tr.hover:bg-slate-50
+              td.px-6.py-4.text-sm.font-medium.text-slate-900= booking.id
+              td.px-6.py-4.text-sm.text-slate-700= booking.guestName
+              td.px-6.py-4.text-sm.text-slate-700= booking.roomName
+              td.px-6.py-4.text-sm.text-slate-700= booking.checkIn
+              td.px-6.py-4.text-sm.text-slate-700= booking.checkOut
+              td.px-6.py-4
+                +badge(booking.status)
+              td.px-6.py-4.text-sm.text-slate-700 $#{booking.total}
+              td.px-6.py-4
+                a.text-indigo-600.hover:text-indigo-800.text-sm.font-medium(href="/admin/bookings/" + booking.id) View

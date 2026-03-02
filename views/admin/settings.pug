@@ -1,0 +1,23 @@
+extends layouts/layout
+
+block content
+  .mb-8
+    h1.text-2xl.font-semibold.text-slate-900 Settings
+    p.text-slate-600.mt-1 General application settings
+  .bg-white.rounded-xl.border.border-slate-200.shadow-sm.p-6.max-w-xl
+    form(method="post", action="/admin/settings")
+      .space-y-4
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="siteName") Site name
+          input#siteName.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="siteName", value=settings.siteName || "", required)
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="currency") Currency
+          select#currency.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(name="currency")
+            option(value="USD", selected=settings.currency === 'USD') USD
+            option(value="EUR", selected=settings.currency === 'EUR') EUR
+            option(value="GBP", selected=settings.currency === 'GBP') GBP
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="timezone") Timezone
+          input#timezone.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="timezone", value=settings.timezone || "UTC")
+      .mt-6
+        button.px-4.py-2.rounded-lg.bg-indigo-600.text-white.font-medium.hover:bg-indigo-700(type="submit") Save settings

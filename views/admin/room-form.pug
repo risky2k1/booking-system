@@ -1,0 +1,31 @@
+extends layouts/layout
+
+block content
+  .mb-6
+    a.inline-flex.items-center.text-sm.text-slate-600.hover:text-slate-900.mb-4(href="/admin/rooms")
+      svg.w-4.h-4.mr-1(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+        path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M15 19l-7-7 7-7")
+      Back to Rooms
+    h1.text-2xl.font-semibold.text-slate-900= room ? 'Edit Room' : 'Create Room'
+  .bg-white.rounded-xl.border.border-slate-200.shadow-sm.p-6.max-w-xl
+    form(method="post", action=room ? "/admin/rooms/" + room.id : "/admin/rooms")
+      if room
+        input(type="hidden", name="_method", value="PUT")
+      .space-y-4
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="name") Name
+          input#name.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="name", value=room ? room.name : "", required)
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="capacity") Capacity
+          input#capacity.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="number", name="capacity", min="1", value=room ? room.capacity : "2", required)
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="amenities") Amenities
+          input#amenities.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="amenities", value=room ? room.amenities : "", placeholder="WiFi, TV, Minibar")
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="status") Status
+          select#status.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(name="status")
+            option(value="active", selected=room && room.status === 'active') Active
+            option(value="inactive", selected=room && room.status === 'inactive') Inactive
+      .mt-6.flex.gap-3
+        button.px-4.py-2.rounded-lg.bg-indigo-600.text-white.font-medium.hover:bg-indigo-700(type="submit")= room ? 'Update' : 'Create'
+        a.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.font-medium.hover:bg-slate-300(href="/admin/rooms") Cancel
