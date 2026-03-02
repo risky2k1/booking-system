@@ -5,9 +5,7 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title + ' | Admin'
-    script(src="https://cdn.tailwindcss.com")
-    script.
-      tailwind.config = { darkMode: 'class' }
+    link(rel="stylesheet", href="/stylesheets/admin.css")
   body.bg-slate-50.text-slate-800.antialiased
     .flex.min-h-screen
       include ../partials/sidebar.pug
