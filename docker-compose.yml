@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: booking_node_app
+    build:
+      context: .
+      dockerfile: .docker/node/Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - booking_network
+
+  postgres:
+    image: postgres:15
+    container_name: booking_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: booking_db
+      POSTGRES_USER: booking_user
+      POSTGRES_PASSWORD: booking_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - booking_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: booking_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - booking_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: booking_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - booking_network
+
+networks:
+  booking_network:
+
+volumes:
+  pgdata:
