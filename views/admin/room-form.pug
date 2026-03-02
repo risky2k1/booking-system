@@ -2,7 +2,7 @@ extends layouts/layout
 
 block content
   .mb-6
-    a.inline-flex.items-center.text-sm.text-slate-600.hover:text-slate-900.mb-4(href="/admin/rooms")
+    a.inline-flex.items-center.text-sm.text-slate-600.mb-4(class="hover:text-slate-900", href="/admin/rooms")
       svg.w-4.h-4.mr-1(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
         path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M15 19l-7-7 7-7")
       Back to Rooms
@@ -27,5 +27,5 @@ block content
             option(value="active", selected=room && room.status === 'active') Active
             option(value="inactive", selected=room && room.status === 'inactive') Inactive
       .mt-6.flex.gap-3
-        button.px-4.py-2.rounded-lg.bg-indigo-600.text-white.font-medium.hover:bg-indigo-700(type="submit")= room ? 'Update' : 'Create'
-        a.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.font-medium.hover:bg-slate-300(href="/admin/rooms") Cancel
+        button.px-4.py-2.rounded-lg.bg-indigo-600.text-white.font-medium(class="hover:bg-indigo-700", type="submit")= room ? 'Update' : 'Create'
+        a.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.font-medium(class="hover:bg-slate-300", href="/admin/rooms") Cancel

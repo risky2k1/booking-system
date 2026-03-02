@@ -1,11 +1,11 @@
 extends layouts/layout
 
 block content
-  .flex.flex-col.sm:flex-row.sm:items-center.sm:justify-between.mb-8
+  div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8")
     div
       h1.text-2xl.font-semibold.text-slate-900 Rooms
       p.text-slate-600.mt-1 Manage room inventory
-    a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium.hover:bg-indigo-700(href="/admin/rooms/create") Add Room
+    a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium(class="hover:bg-indigo-700", href="/admin/rooms/create") Add Room
   .bg-white.rounded-xl.border.border-slate-200.shadow-sm.overflow-hidden
     .overflow-x-auto
       table.min-w-full.divide-y.divide-slate-200
@@ -18,11 +18,11 @@ block content
             th.px-6.py-4.text-right.text-xs.font-medium.text-slate-500.uppercase.tracking-wider
         tbody.divide-y.divide-slate-200
           each room in rooms
-            tr.hover:bg-slate-50
+            tr(class="hover:bg-slate-50")
               td.px-6.py-4.text-sm.font-medium.text-slate-900= room.name
               td.px-6.py-4.text-sm.text-slate-700= room.capacity
               td.px-6.py-4.text-sm.text-slate-700= room.amenities
               td.px-6.py-4
                 +badge(room.status)
               td.px-6.py-4.text-right
-                a.text-indigo-600.hover:text-indigo-800.text-sm.font-medium(href="/admin/rooms/" + room.id + "/edit") Edit
+                a.text-indigo-600.text-sm.font-medium(class="hover:text-indigo-800", href="/admin/rooms/" + room.id + "/edit") Edit

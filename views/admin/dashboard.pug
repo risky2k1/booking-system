@@ -4,7 +4,7 @@ block content
   .mb-8
     h1.text-2xl.font-semibold.text-slate-900 Dashboard
     p.text-slate-600.mt-1 Overview of your booking operations
-  .grid.grid-cols-1.sm:grid-cols-2.lg:grid-cols-4.gap-6.mb-8
+  div(class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8")
     .bg-white.rounded-xl.border.border-slate-200.p-6.shadow-sm
       .flex.items-center.justify-between
         div
@@ -42,6 +42,6 @@ block content
       h2.text-lg.font-medium.text-slate-900 Quick actions
     .p-6
       .flex.flex-wrap.gap-4
-        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium.hover:bg-indigo-700(href="/admin/bookings") View Bookings
-        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.text-sm.font-medium.hover:bg-slate-300(href="/admin/rooms") Manage Rooms
-        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.text-sm.font-medium.hover:bg-slate-300(href="/admin/pricing") Pricing
+        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium(class="hover:bg-indigo-700", href="/admin/bookings") View Bookings
+        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.text-sm.font-medium(class="hover:bg-slate-300", href="/admin/rooms") Manage Rooms
+        a.inline-flex.items-center.px-4.py-2.rounded-lg.bg-slate-200.text-slate-800.text-sm.font-medium(class="hover:bg-slate-300", href="/admin/pricing") Pricing

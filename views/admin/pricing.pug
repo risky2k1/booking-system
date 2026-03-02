@@ -15,24 +15,24 @@ block content
             th.px-6.py-4.text-right.text-xs.font-medium.text-slate-500.uppercase.tracking-wider
         tbody.divide-y.divide-slate-200
           each p in pricing
-            tr.hover:bg-slate-50
+            tr(class="hover:bg-slate-50")
               td.px-6.py-4.text-sm.font-medium.text-slate-900= p.roomName
               td.px-6.py-4.text-sm.text-slate-700 $#{p.weekday}
               td.px-6.py-4.text-sm.text-slate-700 $#{p.weekend}
               td.px-6.py-4.text-right
-                button.pricing-edit.text-indigo-600.hover:text-indigo-800.text-sm.font-medium(data-room-id=p.roomId, data-room-name=p.roomName, data-weekday=p.weekday, data-weekend=p.weekend) Edit
+                button.pricing-edit.text-indigo-600.text-sm.font-medium(class="hover:text-indigo-800", data-room-id=p.roomId, data-room-name=p.roomName, data-weekday=p.weekday, data-weekend=p.weekend) Edit
     .p-6.border-t.border-slate-200
       h3.text-sm.font-medium.text-slate-900.mb-3 Update price
       form#pricing-form.flex.flex-wrap.gap-4.items-end(method="post", action="/admin/pricing")
         input(type="hidden", name="roomId", id="pricing-roomId")
         input(type="hidden", name="roomName", id="pricing-roomName")
-        .flex-1.min-w-[120px]
+        div(class="flex-1 min-w-[120px]")
           label.block.text-xs.font-medium.text-slate-500.mb-1 Weekday ($)
           input#pricing-weekday.w-full.px-3.py-2.border.border-slate-300.rounded-lg(type="number", name="weekday", step="0.01", min="0", required)
-        .flex-1.min-w-[120px]
+        div(class="flex-1 min-w-[120px]")
           label.block.text-xs.font-medium.text-slate-500.mb-1 Weekend ($)
           input#pricing-weekend.w-full.px-3.py-2.border.border-slate-300.rounded-lg(type="number", name="weekend", step="0.01", min="0", required)
-        button.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium.hover:bg-indigo-700(type="submit") Save
+        button.px-4.py-2.rounded-lg.bg-indigo-600.text-white.text-sm.font-medium(class="hover:bg-indigo-700", type="submit") Save
   script.
     document.querySelectorAll('.pricing-edit').forEach(function(btn) {
       btn.addEventListener('click', function() {

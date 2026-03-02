@@ -2,14 +2,14 @@ extends layouts/layout
 
 block content
   .mb-6
-    a.inline-flex.items-center.text-sm.text-slate-600.hover:text-slate-900.mb-4(href="/admin/bookings")
+    a.inline-flex.items-center.text-sm.text-slate-600.mb-4(class="hover:text-slate-900", href="/admin/bookings")
       svg.w-4.h-4.mr-1(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
         path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M15 19l-7-7 7-7")
       Back to Bookings
     h1.text-2xl.font-semibold.text-slate-900 Booking ##{booking.id}
   .bg-white.rounded-xl.border.border-slate-200.shadow-sm.overflow-hidden
     .p-6.space-y-4
-      .grid.grid-cols-1.md:grid-cols-2.gap-4
+      div(class="grid grid-cols-1 md:grid-cols-2 gap-4")
         .py-2
           p.text-xs.font-medium.text-slate-500 Guest name
           p.text-sm.font-medium.text-slate-900= booking.guestName
@@ -32,9 +32,9 @@ block content
     .px-6.py-4.bg-slate-50.border-t.border-slate-200
       p.text-sm.text-slate-600.mb-2 Update status
       .flex.gap-2.flex-wrap
-        button#btn-confirmed.px-3.py-1.5.rounded-lg.text-sm.font-medium.bg-emerald-100.text-emerald-800.hover:bg-emerald-200(data-status="confirmed") Confirmed
-        button#btn-pending.px-3.py-1.5.rounded-lg.text-sm.font-medium.bg-amber-100.text-amber-800.hover:bg-amber-200(data-status="pending") Pending
-        button#btn-cancelled.px-3.py-1.5.rounded-lg.text-sm.font-medium.bg-slate-100.text-slate-600.hover:bg-slate-200(data-status="cancelled") Cancelled
+        button#btn-confirmed(class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-100 text-emerald-800 hover:bg-emerald-200", data-status="confirmed") Confirmed
+        button#btn-pending(class="px-3 py-1.5 rounded-lg text-sm font-medium bg-amber-100 text-amber-800 hover:bg-amber-200", data-status="pending") Pending
+        button#btn-cancelled(class="px-3 py-1.5 rounded-lg text-sm font-medium bg-slate-100 text-slate-600 hover:bg-slate-200", data-status="cancelled") Cancelled
   script.
     var bookingId = '#{booking.id}';
     ['btn-confirmed','btn-pending','btn-cancelled'].forEach(function(id) {
