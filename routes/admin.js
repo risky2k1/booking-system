@@ -18,8 +18,6 @@
 var express = require('express');
 var router = express.Router();
 
-const authRoutes = require("./routes/auth");
-app.use("/api/auth", authRoutes);
 // In-memory store for demo (replace with DB later)
 var bookingsStore = [
   { id: '1', guestName: 'John Doe', roomId: 'r1', roomName: 'Deluxe Suite', checkIn: '2025-03-05', checkOut: '2025-03-08', status: 'confirmed', total: 450 },
@@ -41,6 +39,16 @@ var settingsStore = { siteName: 'Booking Hub', currency: 'USD', timezone: 'UTC' 
 // GET /admin
 router.get('/', function (req, res) {
   res.redirect('/admin/dashboard');
+});
+
+// GET /admin/login
+router.get('/login', function (req, res) {
+  res.render('admin/login', { title: 'Login', error: null });
+});
+
+// GET /admin/register
+router.get('/register', function (req, res) {
+  res.render('admin/register', { title: 'Register', error: null });
 });
 
 // GET /admin/dashboard
