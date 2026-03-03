@@ -1,0 +1,54 @@
+extends layouts/layout
+block content
+  section(class="relative min-h-[85vh] flex items-center justify-center")
+    .absolute.inset-0
+      img.w-full.h-full.object-cover(src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920", alt="Grand Hotel")
+      .absolute.inset-0(class="bg-primary/60")
+    .relative.z-10.text-center.px-4.max-w-4xl.mx-auto
+      h1(class="font-serif text-5xl md:text-7xl font-bold text-white mb-4") Grand Hotel
+      p(class="text-xl md:text-2xl text-white/90 mb-8") Experience luxury by the ocean
+      +button("Explore Rooms", "/rooms")
+
+  section.py-24.px-4
+    .max-w-7xl.mx-auto
+      .text-center.mb-16
+        h2.font-serif.text-4xl.font-bold.text-slate-800.mb-4 Featured Rooms
+        p.text-slate-600.max-w-2xl.mx-auto Discover our most sought-after accommodations
+      .grid(class="grid-cols-1 md:grid-cols-3 gap-8")
+        each room in rooms
+          +roomCard(room)
+
+  section.py-24.bg-white
+    .max-w-7xl.mx-auto.px-4
+      .text-center.mb-16
+        h2.font-serif.text-4xl.font-bold.text-slate-800.mb-4 Why Choose Us
+        p.text-slate-600.max-w-2xl.mx-auto Excellence in every detail
+      .grid(class="grid-cols-1 md:grid-cols-3 gap-12")
+        each f in features
+          .text-center.p-8.rounded-2xl(class="bg-slate-50/80 hover:bg-white hover:shadow-lg transition-all duration-300")
+            .w-14.h-14.rounded-xl(class="bg-primary/10 flex items-center justify-center mx-auto mb-4")
+              svg.w-7.h-7.text-primary(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+                path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z")
+            h3.font-serif.text-xl.font-semibold.text-slate-800.mb-2= f.title
+            p.text-slate-600.text-sm= f.desc
+
+  section.py-24.px-4
+    .max-w-7xl.mx-auto
+      .text-center.mb-16
+        h2.font-serif.text-4xl.font-bold.text-slate-800.mb-4 What Our Guests Say
+        p.text-slate-600.max-w-2xl.mx-auto Trusted by travelers worldwide
+      .grid(class="grid-cols-1 md:grid-cols-3 gap-8")
+        each t in testimonials
+          .bg-white.p-8.rounded-2xl.shadow-lg
+            .flex.gap-1.mb-4
+              - for (var i = 0; i < t.rating; i++)
+                svg.w-5.h-5.text-accent(xmlns="http://www.w3.org/2000/svg", fill="currentColor", viewBox="0 0 20 20")
+                  path(d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z")
+            p.text-slate-600.mb-4= t.text
+            p.font-semibold.text-slate-800= t.name
+
+  section.py-24.bg-primary
+    .max-w-4xl.mx-auto.px-4.text-center
+      h2.font-serif.text-4xl.font-bold.text-white.mb-4 Ready for Your Escape?
+      p(class="text-white/90 mb-8") Book your stay today and experience luxury redefined.
+      +button("View All Rooms", "/rooms")

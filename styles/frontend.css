@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@source "../views/frontend/**/*.pug";
+
+@theme {
+  --font-serif: Cormorant, serif;
+  --font-sans: Montserrat, ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #1E3A8A;
+  --color-secondary: #3B82F6;
+  --color-accent: #CA8A04;
+  --color-cream: #F8FAFC;
+}

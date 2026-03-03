@@ -1,0 +1,70 @@
+extends layouts/layout
+block content
+  section.py-16.px-4
+    .max-w-7xl.mx-auto
+      h1.font-serif.text-4xl.font-bold.text-slate-800.mb-8 Book #{room.name}
+      .grid(class="grid-cols-1 lg:grid-cols-3 gap-12")
+        div(class="lg:col-span-2")
+          form.bg-white.rounded-2xl.shadow-lg.p-8(action="/booking/" + room.slug, method="POST")
+            .grid(class="grid-cols-1 md:grid-cols-2 gap-6 mb-6")
+              div
+                label.block.text-sm.font-medium.text-slate-700.mb-2(for="checkIn") Check-in
+                input#checkIn.w-full.px-4.py-3.rounded-xl.border.border-slate-200(type="date", name="checkIn", required)
+              div
+                label.block.text-sm.font-medium.text-slate-700.mb-2(for="checkOut") Check-out
+                input#checkOut.w-full.px-4.py-3.rounded-xl.border.border-slate-200(type="date", name="checkOut", required)
+            .grid(class="grid-cols-1 md:grid-cols-2 gap-6 mb-6")
+              div
+                label.block.text-sm.font-medium.text-slate-700.mb-2(for="adults") Adults
+                select#adults.w-full.px-4.py-3.rounded-xl.border.border-slate-200(name="adults")
+                  option(value="1") 1
+                  option(value="2") 2
+                  option(value="3") 3
+                  option(value="4") 4
+                  option(value="5") 5+
+              div
+                label.block.text-sm.font-medium.text-slate-700.mb-2(for="children") Children
+                select#children.w-full.px-4.py-3.rounded-xl.border.border-slate-200(name="children")
+                  option(value="0") 0
+                  option(value="1") 1
+                  option(value="2") 2
+                  option(value="3") 3
+                  option(value="4") 4+
+            .mb-6
+              label.block.text-sm.font-medium.text-slate-700.mb-2(for="request") Special requests
+              textarea#request.w-full.px-4.py-3.rounded-xl.border.border-slate-200(rows="4", name="request", placeholder="Any special requirements?")
+            button.w-full.px-8.py-4.rounded-xl.font-semibold.text-white.bg-accent(type="submit", class="hover:bg-amber-600 transition-colors duration-200 cursor-pointer shadow-lg shadow-amber-500/25") Confirm Booking
+        div(class="lg:col-span-1")
+          .bg-white.rounded-2xl.shadow-lg.p-6.sticky.top-24
+            img.w-full.h-48.object-cover.rounded-xl.mb-4(src=room.image, alt=room.name)
+            h3.font-serif.text-xl.font-semibold.text-slate-800.mb-2= room.name
+            .space-y-2.mb-4
+              .flex.justify-between.text-slate-600
+                span Price per night
+                span.font-medium.text-slate-800 $#{room.price}
+              .flex.justify-between.text-slate-600
+                span Nights
+                span.font-medium.text-slate-800#nightsSummary 1
+              .border-t.border-slate-200.pt-4.mt-4
+              .flex.justify-between.font-semibold.text-lg
+                span Total
+                span.text-primary#totalSummary $#{room.price}
+          script.
+            (function() {
+              var checkIn = document.getElementById('checkIn');
+              var checkOut = document.getElementById('checkOut');
+              var nightsEl = document.getElementById('nightsSummary');
+              var totalEl = document.getElementById('totalSummary');
+              var price = #{room.price};
+              function update() {
+                if (checkIn.value && checkOut.value) {
+                  var d1 = new Date(checkIn.value);
+                  var d2 = new Date(checkOut.value);
+                  var nights = Math.max(1, Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24)));
+                  nightsEl.textContent = nights;
+                  totalEl.textContent = '$' + (price * nights);
+                }
+              }
+              checkIn.addEventListener('change', update);
+              checkOut.addEventListener('change', update);
+            })();

@@ -5,8 +5,10 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "build:css": "tailwindcss -i ./styles/admin.css -o ./public/stylesheets/admin.css",
+    "build:css": "tailwindcss -i ./styles/admin.css -o ./public/stylesheets/admin.css && tailwindcss -i ./styles/frontend.css -o ./public/stylesheets/frontend.css",
     "build:css:watch": "tailwindcss -i ./styles/admin.css -o ./public/stylesheets/admin.css --watch",
+    "build:css:frontend": "tailwindcss -i ./styles/frontend.css -o ./public/stylesheets/frontend.css",
+    "build:css:frontend:watch": "tailwindcss -i ./styles/frontend.css -o ./public/stylesheets/frontend.css --watch",
     "db:migrate": "node database/run-migration.js"
   },
   "dependencies": {

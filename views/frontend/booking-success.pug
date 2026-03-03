@@ -1,0 +1,21 @@
+extends layouts/layout
+block content
+  section(class="min-h-[70vh] flex items-center justify-center px-4")
+    .max-w-xl.w-full.text-center
+      .w-20.h-20.rounded-full.bg-emerald-100.flex.items-center.justify-center.mx-auto.mb-6
+        svg.w-10.h-10.text-emerald-600(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+          path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M5 13l4 4L19 7")
+      h1.font-serif.text-4xl.font-bold.text-slate-800.mb-4 Booking Confirmed
+      p.text-slate-600.mb-8 Thank you for choosing Grand Hotel. Your reservation has been received.
+      .bg-white.rounded-2xl.shadow-lg.p-8.text-left.mb-8
+        .space-y-3
+          .flex.justify-between
+            span.text-slate-600 Reference
+            span.font-semibold.text-slate-800= ref
+          .flex.justify-between
+            span.text-slate-600 Room
+            span.font-semibold.text-slate-800= room
+          .flex.justify-between.pt-4.border-t.border-slate-200
+            span.text-slate-600 Total
+            span.font-semibold.text-lg.text-primary $#{total}
+      +button("Back to Home", "/")

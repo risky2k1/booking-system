@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var methodOverride = require('method-override');
 
-var indexRouter = require('./routes/index');
+var frontendRouter = require('./routes/frontend');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var authRouter = require('./routes/auth');
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
-app.use('/', indexRouter);
+app.use('/', frontendRouter);
 app.use('/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/admin', adminRouter);

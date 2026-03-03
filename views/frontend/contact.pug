@@ -1,0 +1,38 @@
+extends layouts/layout
+block content
+  section.relative.h-80.flex.items-center.justify-center
+    .absolute.inset-0
+      img.w-full.h-full.object-cover(src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920", alt="Contact")
+      .absolute.inset-0(class="bg-primary/60")
+    .relative.z-10.text-center.px-4
+      h1.font-serif.text-5xl.font-bold.text-white.mb-2 Contact
+      p.text-xl.text-white/90 We would love to hear from you
+
+  section.py-24.px-4
+    .max-w-4xl.mx-auto
+      .grid(class="grid-cols-1 md:grid-cols-2 gap-12")
+        div
+          h2.font-serif.text-2xl.font-bold.text-slate-800.mb-6 Get in Touch
+          .space-y-6
+            div
+              h3.font-semibold.text-slate-800.mb-2 Address
+              p.text-slate-600 123 Ocean Boulevard, Coastal City, CC 12345
+            div
+              h3.font-semibold.text-slate-800.mb-2 Phone
+              p.text-slate-600 +1 (555) 123-4567
+            div
+              h3.font-semibold.text-slate-800.mb-2 Email
+              p.text-slate-600 reservations@grandhotel.com
+        .bg-white.rounded-2xl.shadow-lg.p-8
+          h3.font-serif.text-xl.font-semibold.text-slate-800.mb-4 Send a Message
+          form
+            .mb-4
+              label.block.text-sm.font-medium.text-slate-700.mb-2(for="name") Name
+              input#name.w-full.px-4.py-3.rounded-xl.border.border-slate-200(type="text", name="name", required)
+            .mb-4
+              label.block.text-sm.font-medium.text-slate-700.mb-2(for="email") Email
+              input#email.w-full.px-4.py-3.rounded-xl.border.border-slate-200(type="email", name="email", required)
+            .mb-4
+              label.block.text-sm.font-medium.text-slate-700.mb-2(for="message") Message
+              textarea#message.w-full.px-4.py-3.rounded-xl.border.border-slate-200(rows="4", name="message", required)
+            button.w-full.px-8.py-3.rounded-xl.font-semibold.text-white.bg-accent(type="submit", class="hover:bg-amber-600 transition-colors duration-200 cursor-pointer") Send Message

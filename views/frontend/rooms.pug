@@ -1,0 +1,15 @@
+extends layouts/layout
+block content
+  section.relative.h-80.flex.items-center.justify-center
+    .absolute.inset-0
+      img.w-full.h-full.object-cover(src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920", alt="Rooms")
+      .absolute.inset-0(class="bg-primary/60")
+    .relative.z-10.text-center.px-4
+      h1.font-serif.text-5xl.font-bold.text-white.mb-2 Our Rooms
+      p(class="text-xl text-white/90") Discover your perfect retreat
+
+  section.py-16.px-4
+    .max-w-7xl.mx-auto
+      .grid(class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8")
+        each room in rooms
+          +roomCard(room)

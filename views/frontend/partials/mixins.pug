@@ -1,0 +1,20 @@
+mixin button(text, link)
+  a.inline-flex.items-center.justify-center.px-8.py-3.rounded-xl.font-semibold.text-white.bg-accent(class="hover:bg-amber-600 transition-colors duration-200 cursor-pointer shadow-lg shadow-amber-500/25", href=link)= text
+
+mixin roomCard(room)
+  article.rounded-2xl.overflow-hidden.bg-white.shadow-lg(class="hover:shadow-xl transition-shadow duration-300 cursor-pointer")
+    a.block(href="/rooms/" + room.slug)
+      img.w-full.h-56.object-cover(src=room.image, alt=room.name)
+    .p-6
+      h3.font-serif.text-xl.font-semibold.text-slate-800.mb-2= room.name
+      p.text-slate-600.text-sm.mb-4.line-clamp-2= room.shortDesc
+      .flex.items-center.justify-between
+        span.font-semibold.text-primary $#{room.price}
+          span.text-slate-500.text-sm.font-normal  /night
+        a.inline-flex.items-center.gap-2.text-accent.font-medium.text-sm(href="/rooms/" + room.slug, class="hover:text-amber-600 transition-colors cursor-pointer")
+          | View details
+          svg.w-4.h-4(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
+            path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M17 8l4 4m0 0l-4 4m4-4H3")
+
+mixin badge(text)
+  span.inline-flex.items-center.px-3.py-1.rounded-full.text-xs.font-medium(class="bg-primary/10 text-primary")= text
