@@ -182,5 +182,5 @@ npm run db:migrate
 
 ## Tài liệu liên quan
 
-- [AUTHENTICATION-GUIDE.md](./AUTHENTICATION-GUIDE.md) – Bảo vệ route admin
-- [config/db.js](../config/db.js) – Kết nối PostgreSQL
+- [Authentication](/admin/docs/authentication) – Bảo vệ route admin
+- [Rooms & Pricing](/admin/docs/rooms-pricing) – Phòng và giá

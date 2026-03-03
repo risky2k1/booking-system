@@ -7,11 +7,15 @@ const DOCS_DIR = path.join(__dirname, "../docs");
 const DOC_NAV = [
   { id: "intro", title: "Giới thiệu", href: "/admin/docs" },
   { id: "authentication", title: "Authentication", href: "/admin/docs/authentication" },
+  { id: "settings", title: "Settings", href: "/admin/docs/settings" },
+  { id: "rooms-pricing", title: "Rooms & Pricing", href: "/admin/docs/rooms-pricing" },
 ];
 
 function getDoc(slug) {
   const fileMap = {
     authentication: "AUTHENTICATION-GUIDE.md",
+    settings: "SETTINGS-GUIDE.md",
+    "rooms-pricing": "ROOMS-PRICING-GUIDE.md",
   };
   const filename = fileMap[slug];
   if (!filename) return null;
@@ -43,6 +47,8 @@ exports.show = function (req, res) {
   });
   const titles = {
     authentication: "Authentication",
+    settings: "Settings",
+    "rooms-pricing": "Rooms & Pricing",
   };
   res.render("admin/docs/show", {
     title: titles[slug] || slug,
