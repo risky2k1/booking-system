@@ -40,6 +40,10 @@ router.get('/logout', function (req, res) {
 
 // ----- Protected (admin auth required) -----
 router.use(adminAuth);
+router.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 
 // In-memory store for demo (replace with DB later)
 var bookingsStore = [

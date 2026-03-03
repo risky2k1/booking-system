@@ -5,8 +5,10 @@ header.bg-white.border-b.border-slate-200.px-6.py-4.sticky.top-0.z-30
         path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M4 6h16M4 12h16M4 18h16")
     .relative
       button#profile-toggle(class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100", type="button")
-        .w-8.h-8.rounded-full.bg-indigo-600.flex.items-center.justify-center.text-white.text-sm.font-medium Admin
-        span(class="text-sm font-medium text-slate-700 hidden sm:inline") Admin User
+        - var parts = (user && user.name) ? user.name.trim().split(/\s+/) : []
+        - var initials = parts.length >= 2 ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase() : (parts[0] ? parts[0].slice(0,2).toUpperCase() : 'AD')
+        .w-8.h-8.rounded-full.bg-indigo-600.flex.items-center.justify-center.text-white.text-sm.font-medium= initials
+        span(class="text-sm font-medium text-slate-700 hidden sm:inline")= user && user.name ? user.name : 'Admin User'
         svg.w-4.h-4.text-slate-500(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke="currentColor")
           path(stroke-linecap="round", stroke-linejoin="round", stroke-width="2", d="M19 9l-7 7-7-7")
       #profile-dropdown.hidden.absolute.right-0.mt-2.w-48.bg-white.rounded-lg.shadow-lg.border.border-slate-200.py-1.z-50
