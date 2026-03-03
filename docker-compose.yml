@@ -3,6 +3,7 @@ version: "3.9"
 services:
   app:
     container_name: booking_node_app
+    command: npm run dev
     build:
       context: .
       dockerfile: .docker/node/Dockerfile
