@@ -21,7 +21,10 @@ var adminAuth = require('../middlewares/adminAuthMiddleware').adminAuth;
 var redirectIfAdmin = require('../middlewares/adminAuthMiddleware').redirectIfAdmin;
 var docsController = require('../controllers/docsController');
 var settingsController = require('../controllers/settingsController');
+var roomController = require('../controllers/roomController');
+var pricingController = require('../controllers/pricingController');
 var redirectWithToast = require('../utils/redirectWithToast');
+var pool = require('../config/db');
 
 // ----- Public (no auth) -----
 // GET /admin/login
@@ -53,16 +56,6 @@ var bookingsStore = [
   { id: '2', guestName: 'Jane Smith', roomId: 'r2', roomName: 'Standard Room', checkIn: '2025-03-10', checkOut: '2025-03-12', status: 'pending', total: 220 },
   { id: '3', guestName: 'Bob Wilson', roomId: 'r1', roomName: 'Deluxe Suite', checkIn: '2025-03-15', checkOut: '2025-03-18', status: 'cancelled', total: 0 }
 ];
-var roomsStore = [
-  { id: 'r1', name: 'Deluxe Suite', capacity: 2, amenities: 'WiFi, TV, Minibar', status: 'active' },
-  { id: 'r2', name: 'Standard Room', capacity: 2, amenities: 'WiFi, TV', status: 'active' },
-  { id: 'r3', name: 'Family Room', capacity: 4, amenities: 'WiFi, TV, Sofa', status: 'active' }
-];
-var pricingStore = [
-  { roomId: 'r1', roomName: 'Deluxe Suite', weekday: 150, weekend: 180 },
-  { roomId: 'r2', roomName: 'Standard Room', weekday: 80, weekend: 100 },
-  { roomId: 'r3', roomName: 'Family Room', weekday: 120, weekend: 150 }
-];
 // GET /admin
 router.get('/', function (req, res) {
   res.redirect('/admin/dashboard');
@@ -73,14 +66,17 @@ router.get('/docs', docsController.index);
 router.get('/docs/:slug', docsController.show);
 
 // GET /admin/dashboard
-router.get('/dashboard', function (req, res) {
+router.get('/dashboard', function (req, res, next) {
   var stats = {
     totalBookings: bookingsStore.length,
     confirmedBookings: bookingsStore.filter(function (b) { return b.status === 'confirmed'; }).length,
-    totalRooms: roomsStore.length,
+    totalRooms: 0,
     revenue: bookingsStore.filter(function (b) { return b.status === 'confirmed'; }).reduce(function (s, b) { return s + (b.total || 0); }, 0)
   };
-  res.render('admin/dashboard', { title: 'Dashboard', path: 'dashboard', stats: stats });
+  pool.query('SELECT COUNT(*)::int as c FROM rooms').then(function (r) {
+    stats.totalRooms = r.rows[0] ? r.rows[0].c : 0;
+    res.render('admin/dashboard', { title: 'Dashboard', path: 'dashboard', stats: stats });
+  }).catch(next);
 });
 
 // GET /admin/bookings
@@ -104,63 +100,25 @@ router.patch('/bookings/:id', express.json(), function (req, res) {
 });
 
 // GET /admin/rooms
-router.get('/rooms', function (req, res) {
-  res.render('admin/rooms', { title: 'Rooms', path: 'rooms', rooms: roomsStore });
-});
+router.get('/rooms', roomController.index);
 
 // GET /admin/rooms/create
-router.get('/rooms/create', function (req, res) {
-  res.render('admin/room-form', { title: 'Create Room', path: 'rooms', room: null });
-});
+router.get('/rooms/create', roomController.createForm);
 
 // POST /admin/rooms
-router.post('/rooms', function (req, res) {
-  var nums = roomsStore.map(function (r) { return parseInt(r.id.replace(/\D/g, ''), 10) || 0; });
-  var id = 'r' + (nums.length ? Math.max.apply(null, nums) + 1 : 1);
-  var room = {
-    id: id,
-    name: req.body.name || 'Unnamed',
-    capacity: parseInt(req.body.capacity, 10) || 2,
-    amenities: req.body.amenities || '',
-    status: req.body.status || 'active'
-  };
-  roomsStore.push(room);
-  redirectWithToast(res, '/admin/rooms', 'success', 'Room created');
-});
+router.post('/rooms', roomController.create);
 
 // GET /admin/rooms/:id/edit
-router.get('/rooms/:id/edit', function (req, res) {
-  var room = roomsStore.find(function (r) { return r.id === req.params.id; });
-  if (!room) return res.status(404).send('Room not found');
-  res.render('admin/room-form', { title: 'Edit Room', path: 'rooms', room: room });
-});
+router.get('/rooms/:id/edit', roomController.editForm);
 
 // PUT /admin/rooms/:id
-router.put('/rooms/:id', function (req, res) {
-  var idx = roomsStore.findIndex(function (r) { return r.id === req.params.id; });
-  if (idx === -1) return res.status(404).send('Room not found');
-  roomsStore[idx].name = req.body.name || roomsStore[idx].name;
-  roomsStore[idx].capacity = parseInt(req.body.capacity, 10) || roomsStore[idx].capacity;
-  roomsStore[idx].amenities = req.body.amenities || roomsStore[idx].amenities;
-  roomsStore[idx].status = req.body.status || roomsStore[idx].status;
-  redirectWithToast(res, '/admin/rooms', 'success', 'Room updated');
-});
+router.put('/rooms/:id', roomController.update);
 
 // GET /admin/pricing
-router.get('/pricing', function (req, res) {
-  res.render('admin/pricing', { title: 'Pricing', path: 'pricing', pricing: pricingStore });
-});
+router.get('/pricing', pricingController.index);
 
 // POST /admin/pricing
-router.post('/pricing', express.urlencoded({ extended: true }), function (req, res) {
-  var roomId = req.body.roomId;
-  var idx = pricingStore.findIndex(function (p) { return p.roomId === roomId; });
-  var row = idx >= 0 ? pricingStore[idx] : { roomId: roomId, roomName: req.body.roomName || roomId };
-  row.weekday = parseFloat(req.body.weekday) || 0;
-  row.weekend = parseFloat(req.body.weekend) || 0;
-  if (idx < 0) pricingStore.push(row);
-  redirectWithToast(res, '/admin/pricing', 'success', 'Pricing updated');
-});
+router.post('/pricing', express.urlencoded({ extended: true }), pricingController.update);
 
 // GET /admin/settings
 router.get('/settings', settingsController.index);

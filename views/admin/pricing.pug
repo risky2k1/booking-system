@@ -16,13 +16,14 @@ block content
         tbody.divide-y.divide-slate-200
           each p in pricing
             tr(class="hover:bg-slate-50")
-              td.px-6.py-4.text-sm.font-medium.text-slate-900= p.roomName
+              td.px-6.py-4.text-sm.font-medium.text-slate-900= p.room_name
               td.px-6.py-4.text-sm.text-slate-700 $#{p.weekday}
               td.px-6.py-4.text-sm.text-slate-700 $#{p.weekend}
               td.px-6.py-4.text-right
-                button.pricing-edit.text-indigo-600.text-sm.font-medium(class="hover:text-indigo-800", data-room-id=p.roomId, data-room-name=p.roomName, data-weekday=p.weekday, data-weekend=p.weekend) Edit
+                button.pricing-edit.text-indigo-600.text-sm.font-medium(class="hover:text-indigo-800", data-room-id=p.room_id, data-room-name=p.room_name, data-weekday=p.weekday, data-weekend=p.weekend) Edit
     .p-6.border-t.border-slate-200
       h3.text-sm.font-medium.text-slate-900.mb-3 Update price
+      p#pricing-selected-room.text-sm.text-slate-500.mb-2 Click Edit on a row to update
       form#pricing-form.flex.flex-wrap.gap-4.items-end(method="post", action="/admin/pricing")
         input(type="hidden", name="roomId", id="pricing-roomId")
         input(type="hidden", name="roomName", id="pricing-roomName")
@@ -40,5 +41,6 @@ block content
         document.getElementById('pricing-roomName').value = this.getAttribute('data-room-name');
         document.getElementById('pricing-weekday').value = this.getAttribute('data-weekday');
         document.getElementById('pricing-weekend').value = this.getAttribute('data-weekend');
+        document.getElementById('pricing-selected-room').textContent = 'Editing: ' + this.getAttribute('data-room-name');
       });
     });

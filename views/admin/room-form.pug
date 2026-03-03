@@ -16,11 +16,17 @@ block content
           label.block.text-sm.font-medium.text-slate-700.mb-1(for="name") Name
           input#name.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="name", value=room ? room.name : "", required)
         div
-          label.block.text-sm.font-medium.text-slate-700.mb-1(for="capacity") Capacity
-          input#capacity.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="number", name="capacity", min="1", value=room ? room.capacity : "2", required)
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="main_image") Main image (URL)
+          input#main_image.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="url", name="main_image", value=room ? room.main_image || "" : "", placeholder="https://...")
         div
-          label.block.text-sm.font-medium.text-slate-700.mb-1(for="amenities") Amenities
-          input#amenities.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="amenities", value=room ? room.amenities : "", placeholder="WiFi, TV, Minibar")
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="images") Secondary images (URLs, comma-separated)
+          input#images.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="images", value=room && room.images ? room.images.join(", ") : "", placeholder="https://..., https://...")
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="amenities") Services / Amenities
+          input#amenities.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="text", name="amenities", value=room ? room.amenities || "" : "", placeholder="WiFi, TV, Minibar")
+        div
+          label.block.text-sm.font-medium.text-slate-700.mb-1(for="beds") Beds
+          input#beds.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(type="number", name="beds", min="1", value=room ? room.beds : "1", required)
         div
           label.block.text-sm.font-medium.text-slate-700.mb-1(for="status") Status
           select#status.w-full.px-3.py-2.border.border-slate-300.rounded-lg.text-slate-900(name="status")

@@ -11,17 +11,27 @@ block content
       table.min-w-full.divide-y.divide-slate-200
         thead.bg-slate-50
           tr
-            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Name
-            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Capacity
-            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Amenities
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Room
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Beds
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Services
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Weekday
+            th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Weekend
             th.px-6.py-4.text-left.text-xs.font-medium.text-slate-500.uppercase.tracking-wider Status
             th.px-6.py-4.text-right.text-xs.font-medium.text-slate-500.uppercase.tracking-wider
         tbody.divide-y.divide-slate-200
           each room in rooms
             tr(class="hover:bg-slate-50")
-              td.px-6.py-4.text-sm.font-medium.text-slate-900= room.name
-              td.px-6.py-4.text-sm.text-slate-700= room.capacity
-              td.px-6.py-4.text-sm.text-slate-700= room.amenities
+              td.px-6.py-4
+                .flex.items-center.gap-3
+                  if room.main_image
+                    img.w-12.h-12.rounded-lg.object-cover(src=room.main_image, alt="", onerror="this.style.display='none'")
+                  .w-12.h-12.rounded-lg.bg-slate-200.flex.items-center.justify-center.text-slate-400.text-xs(class=(room.main_image ? 'hidden' : ''))
+                    | No img
+                  span.text-sm.font-medium.text-slate-900= room.name
+              td.px-6.py-4.text-sm.text-slate-700= room.beds
+              td.px-6.py-4.text-sm.text-slate-700= room.amenities || '-'
+              td.px-6.py-4.text-sm.text-slate-700 $#{room.weekday || 0}
+              td.px-6.py-4.text-sm.text-slate-700 $#{room.weekend || 0}
               td.px-6.py-4
                 +badge(room.status)
               td.px-6.py-4.text-right
