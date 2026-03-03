@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const redirectWithToast = require("../utils/redirectWithToast");
 
 const DEFAULTS = { siteName: "Booking Hub", currency: "USD", timezone: "UTC" };
 
@@ -57,9 +58,9 @@ exports.update = async function (req, res) {
         [key, value]
       );
     }
-    res.redirect("/admin/settings");
+    redirectWithToast(res, "/admin/settings", "success", "Settings saved");
   } catch (err) {
     console.error("settingsController.update:", err);
-    res.status(500).send("Failed to save settings");
+    redirectWithToast(res, "/admin/settings", "error", "Failed to save settings");
   }
 };

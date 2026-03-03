@@ -44,9 +44,15 @@ block content
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: status })
-        }).then(function(r) { return r.json(); }).then(function(data) {
+        }).then(function(r) {
+          if (!r.ok) return r.json().then(function(d) { return Promise.reject(d); });
+          return r.json();
+        }).then(function(data) {
           var badge = document.querySelector('.inline-flex.items-center.px-2');
           if (badge) { badge.textContent = status; badge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ' + (status === 'confirmed' ? 'bg-emerald-100 text-emerald-800' : status === 'pending' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'); }
+          if (window.showToast) showToast('success', 'Status updated');
+        }).catch(function() {
+          if (window.showToast) showToast('error', 'Failed to update status');
         });
       });
     });

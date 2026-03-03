@@ -2,6 +2,15 @@
 
 @source "../views/admin/**/*.pug";
 
+/* Toast animation */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-toast-in {
+  animation: toast-in 0.3s ease-out forwards;
+}
+
 /* Docs prose styling (Laravel-style) */
 .prose-docs h1, .prose-docs h2, .prose-docs h3 { scroll-margin-top: 6rem; }
 .prose-docs h1 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 2rem; margin-bottom: 1rem; }

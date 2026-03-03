@@ -21,6 +21,7 @@ var adminAuth = require('../middlewares/adminAuthMiddleware').adminAuth;
 var redirectIfAdmin = require('../middlewares/adminAuthMiddleware').redirectIfAdmin;
 var docsController = require('../controllers/docsController');
 var settingsController = require('../controllers/settingsController');
+var redirectWithToast = require('../utils/redirectWithToast');
 
 // ----- Public (no auth) -----
 // GET /admin/login
@@ -36,7 +37,7 @@ router.get('/register', redirectIfAdmin, function (req, res) {
 // GET /admin/logout
 router.get('/logout', function (req, res) {
   res.clearCookie('token');
-  res.redirect('/admin/login');
+  redirectWithToast(res, '/admin/login', 'success', 'Logged out successfully');
 });
 
 // ----- Protected (admin auth required) -----
@@ -124,7 +125,7 @@ router.post('/rooms', function (req, res) {
     status: req.body.status || 'active'
   };
   roomsStore.push(room);
-  res.redirect('/admin/rooms');
+  redirectWithToast(res, '/admin/rooms', 'success', 'Room created');
 });
 
 // GET /admin/rooms/:id/edit
@@ -142,7 +143,7 @@ router.put('/rooms/:id', function (req, res) {
   roomsStore[idx].capacity = parseInt(req.body.capacity, 10) || roomsStore[idx].capacity;
   roomsStore[idx].amenities = req.body.amenities || roomsStore[idx].amenities;
   roomsStore[idx].status = req.body.status || roomsStore[idx].status;
-  res.redirect('/admin/rooms');
+  redirectWithToast(res, '/admin/rooms', 'success', 'Room updated');
 });
 
 // GET /admin/pricing
@@ -158,7 +159,7 @@ router.post('/pricing', express.urlencoded({ extended: true }), function (req, r
   row.weekday = parseFloat(req.body.weekday) || 0;
   row.weekend = parseFloat(req.body.weekend) || 0;
   if (idx < 0) pricingStore.push(row);
-  res.redirect('/admin/pricing');
+  redirectWithToast(res, '/admin/pricing', 'success', 'Pricing updated');
 });
 
 // GET /admin/settings
