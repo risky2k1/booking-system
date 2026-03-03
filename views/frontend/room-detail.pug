@@ -25,4 +25,7 @@ block content
             div
               span.font-semibold.text-2xl.text-primary $#{room.price}
               span.text-slate-500  /night
+              if room.weekday && room.weekend && Math.round(room.weekday) !== Math.round(room.weekend)
+                p.text-sm.text-slate-500.mt-1
+                  | Weekday: $#{room.weekday} · Weekend: $#{room.weekend}
             +button("Book Now", "/booking/" + room.slug)
