@@ -20,6 +20,7 @@ var router = express.Router();
 var adminAuth = require('../middlewares/adminAuthMiddleware').adminAuth;
 var redirectIfAdmin = require('../middlewares/adminAuthMiddleware').redirectIfAdmin;
 var docsController = require('../controllers/docsController');
+var settingsController = require('../controllers/settingsController');
 
 // ----- Public (no auth) -----
 // GET /admin/login
@@ -61,8 +62,6 @@ var pricingStore = [
   { roomId: 'r2', roomName: 'Standard Room', weekday: 80, weekend: 100 },
   { roomId: 'r3', roomName: 'Family Room', weekday: 120, weekend: 150 }
 ];
-var settingsStore = { siteName: 'Booking Hub', currency: 'USD', timezone: 'UTC' };
-
 // GET /admin
 router.get('/', function (req, res) {
   res.redirect('/admin/dashboard');
@@ -163,16 +162,9 @@ router.post('/pricing', express.urlencoded({ extended: true }), function (req, r
 });
 
 // GET /admin/settings
-router.get('/settings', function (req, res) {
-  res.render('admin/settings', { title: 'Settings', path: 'settings', settings: settingsStore });
-});
+router.get('/settings', settingsController.index);
 
 // POST /admin/settings
-router.post('/settings', function (req, res) {
-  settingsStore.siteName = req.body.siteName || settingsStore.siteName;
-  settingsStore.currency = req.body.currency || settingsStore.currency;
-  settingsStore.timezone = req.body.timezone || settingsStore.timezone;
-  res.redirect('/admin/settings');
-});
+router.post('/settings', settingsController.update);
 
 module.exports = router;

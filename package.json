@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "build:css": "tailwindcss -i ./styles/admin.css -o ./public/stylesheets/admin.css",
-    "build:css:watch": "tailwindcss -i ./styles/admin.css -o ./public/stylesheets/admin.css --watch"
+    "build:css:watch": "tailwindcss -i ./styles/admin.css -o ./public/stylesheets/admin.css --watch",
+    "db:migrate": "node database/run-migration.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
