@@ -17,6 +17,29 @@
 
 var express = require('express');
 var router = express.Router();
+var adminAuth = require('../middlewares/adminAuthMiddleware').adminAuth;
+var redirectIfAdmin = require('../middlewares/adminAuthMiddleware').redirectIfAdmin;
+var docsController = require('../controllers/docsController');
+
+// ----- Public (no auth) -----
+// GET /admin/login
+router.get('/login', redirectIfAdmin, function (req, res) {
+  res.render('admin/login', { title: 'Login', error: null });
+});
+
+// GET /admin/register
+router.get('/register', redirectIfAdmin, function (req, res) {
+  res.render('admin/register', { title: 'Register', error: null });
+});
+
+// GET /admin/logout
+router.get('/logout', function (req, res) {
+  res.clearCookie('token');
+  res.redirect('/admin/login');
+});
+
+// ----- Protected (admin auth required) -----
+router.use(adminAuth);
 
 // In-memory store for demo (replace with DB later)
 var bookingsStore = [
@@ -41,15 +64,9 @@ router.get('/', function (req, res) {
   res.redirect('/admin/dashboard');
 });
 
-// GET /admin/login
-router.get('/login', function (req, res) {
-  res.render('admin/login', { title: 'Login', error: null });
-});
-
-// GET /admin/register
-router.get('/register', function (req, res) {
-  res.render('admin/register', { title: 'Register', error: null });
-});
+// GET /admin/docs
+router.get('/docs', docsController.index);
+router.get('/docs/:slug', docsController.show);
 
 // GET /admin/dashboard
 router.get('/dashboard', function (req, res) {
